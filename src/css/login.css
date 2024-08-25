@@ -16,7 +16,7 @@ body {
 }
 
 .frame {
-  height: 575px;
+  height: 650px;
   width: 430px;
   background:
     linear-gradient(
@@ -34,7 +34,7 @@ body {
 }
 
 .frame-long {
-  height: 615px;
+  height: 725px;
 }
 
 .frame-short {
@@ -116,7 +116,7 @@ li {
 
 .form-signup {
   width: 430px;
-  height: 375px;
+  height: 500px;
 	font-size: 16px;
 	font-weight: 300;
   padding-left: 37px;
@@ -132,6 +132,10 @@ li {
 .form-signup-left {
   transform: translateX(-399px);
   opacity: 1;
+  -webkit-transform: translateX(-399px);
+  -moz-transform: translateX(-399px);
+  -ms-transform: translateX(-399px);
+  -o-transform: translateX(-399px);
 }
 
 .form-signup-down {
