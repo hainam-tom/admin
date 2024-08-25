@@ -61,7 +61,7 @@ $(function() {
         countdown--;
         if (countdown === 0) {
           clearInterval(intervalId);
-          window.location.href = "../products/products.html";
+          window.location.href = "index.html";
         }
       }, 1000);
     } else {
