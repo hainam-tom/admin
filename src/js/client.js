@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     // Fetch and store users from API or local storage
     async function fetchAndStoreUsers() {
         try {
@@ -196,16 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('cancelButton').addEventListener('click', closeEditModal);
     document.getElementById('editUserForm').addEventListener('submit', saveEditedUser);
-
-    const reloadButton = document.getElementById('reloadButton');
-    reloadButton.addEventListener('click', () => {
+    const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+    const reloadButton = document.getElementById("reloadButton");
+    reloadButton.addEventListener("click", async () => {
+    try {
         // Clear localStorage to force API reload
-        localStorage.removeItem('users');
-        
-        // Fetch and display fresh data
+        localStorage.removeItem("users");
+        sleep(9000)
         fetchAndStoreUsers();
+    } catch (error) {
+        console.error("Error during reload process:", error);
+    }
     });
-
+        
     // Call the function after DOM is loaded
     fetchAndStoreUsers();
 });
