@@ -59,7 +59,7 @@ document
       const response = await fetch(
         `https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users?email=${encodeURIComponent(
           emailOrPhone
-        )}&password=${encodeURIComponent(password)}`,
+        )}`,
         {
           method: "GET",
           headers: {
