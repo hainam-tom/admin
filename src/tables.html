@@ -286,7 +286,12 @@
                 </div>
                 <div>
                   <label for="editPassword">Password:</label>
-                  <input type="password" id="editPassword" />
+                  <input
+                    type="password"
+                    id="editPassword"
+                    required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
+                  />
                 </div>
                 <button type="submit">Save</button>
                 <!-- Cancel button -->
@@ -329,7 +334,12 @@
                 </div>
                 <div>
                   <label for="createPassword">Password:</label>
-                  <input type="password" id="createPassword" required />
+                  <input
+                    type="password"
+                    id="createPassword"
+                    required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
+                  />
                 </div>
                 <button type="submit" class="btn-create">Create</button>
                 <!-- Cancel button -->
