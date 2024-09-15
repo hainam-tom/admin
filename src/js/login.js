@@ -5,6 +5,7 @@ document
 
     const emailOrPhone = document.getElementById("emailOrPhone").value.trim();
     const password = document.getElementById("password").value.trim();
+    console.log(password, emailOrPhone)
 
     // Basic validation
     if (!emailOrPhone) {
@@ -71,11 +72,11 @@ document
         throw new Error("Network response was not ok");
       }
 
-      const data = await response.json();
+      const array = await response.json();
+      const data = array.find((o) => o.email === emailOrPhone);
 
       if (
-        data &&
-        (data.email === emailOrPhone || data.phone === emailOrPhone) &&
+        (data.email === emailOrPhone) &&
         data.password === password
       ) {
         localStorage.setItem("userData", JSON.stringify(data));
