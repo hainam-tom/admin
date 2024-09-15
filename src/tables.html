@@ -129,6 +129,8 @@
                                 <i class="fas fa-table me-1"></i>
                                 Users list
                                 <button id="reloadButton">Reload Data</button>
+                                <button id="createButton" class="btn-create">Create</button>
+
                                 
                             </div>
                             <div class="card-body">
@@ -141,6 +143,7 @@
                                             <th>Phone number</th> 
                                             <th>Date of birth</th> 
                                             <th>Password</th> 
+                                            <th>Actions</th>
                                         </tr> 
                                     </thead>
                                     <tfoot>
@@ -151,6 +154,7 @@
                                             <th>Phone number</th> 
                                             <th>Date of birth</th> 
                                             <th>Password</th> 
+                                            <th>Actions</th>
                                         </tr> 
                                     </tfoot>
                                     <tbody>
@@ -158,6 +162,65 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div id="editUserModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid #ccc; padding: 20px; background-color: white; z-index: 1000;">
+                            <h2>Edit User</h2>
+                            <form id="editUserForm">
+                                <input type="hidden" id="editUserId">
+                                <div>
+                                    <label for="editFullName">Full Name:</label>
+                                    <input type="text" id="editFullName">
+                                </div>
+                                <div>
+                                    <label for="editEmail">Email:</label>
+                                    <input type="email" id="editEmail">
+                                </div>
+                                <div>
+                                    <label for="editPhone">Phone:</label>
+                                    <input type="text" id="editPhone">
+                                </div>
+                                <div>
+                                    <label for="editDateOfBirth">Date of Birth:</label>
+                                    <input type="date" id="editDateOfBirth">
+                                </div>
+                                <div>
+                                    <label for="editPassword">Password:</label>
+                                    <input type="password" id="editPassword">
+                                </div>
+                                <button type="submit">Save</button>
+                                <!-- Cancel button -->
+                                <button type="button" id="cancelButton">Cancel</button>
+                            </form>
+                        </div>
+                        
+                        <!-- Create User Modal -->
+                        <div id="createUserModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 1px solid #ccc; padding: 20px; background-color: white; z-index: 1000;">
+                            <h2>Create User</h2>
+                            <form id="createUserForm">
+                                <div>
+                                    <label for="createFullName">Full Name:</label>
+                                    <input type="text" id="createFullName" required>
+                                </div>
+                                <div>
+                                    <label for="createEmail">Email:</label>
+                                    <input type="email" id="createEmail" required>
+                                </div>
+                                <div>
+                                    <label for="createPhone">Phone:</label>
+                                    <input type="text" id="createPhone" required>
+                                </div>
+                                <div>
+                                    <label for="createDateOfBirth">Date of Birth:</label>
+                                    <input type="date" id="createDateOfBirth" required>
+                                </div>
+                                <div>
+                                    <label for="createPassword">Password:</label>
+                                    <input type="password" id="createPassword" required>
+                                </div>
+                                <button type="submit" class="btn-create">Create</button>
+                                <!-- Cancel button -->
+                                <button type="button" id="createCancelButton">Cancel</button>
+                            </form>
                         </div>
                     </div>
                 </main>
