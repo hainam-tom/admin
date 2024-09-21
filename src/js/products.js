@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('/products', {
+            const response = await fetch(apt_link + '/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
