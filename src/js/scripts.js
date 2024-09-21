@@ -34,5 +34,5 @@ document.getElementById('logout').addEventListener('click', function() {
     localStorage.removeItem('userData'); // Change 'user' to the actual key you're using
 
     // Redirect to the registration page
-    window.location.href = '/'; // Change to your registration page URL
+    window.location.href = '../index.html'; // Change to your registration page URL
 });
