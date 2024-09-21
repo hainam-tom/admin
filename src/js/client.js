@@ -55,12 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteButton.addEventListener('click', () => deleteUser(user.id)); // Attach delete functionality
                 ButtonCell.appendChild(deleteButton);
 
+                const emailButton = document.createElement('button');
+                emailButton.textContent = 'Send Email';
+                emailButton.classList.add('btn', 'btn-info');
+                emailButton.addEventListener('click', () => openEmailModal(user));
+                ButtonCell.appendChild(emailButton);
+
                 row.appendChild(idCell);
                 row.appendChild(fullNameCell);
                 row.appendChild(emailCell);
                 row.appendChild(phoneCell);
                 row.appendChild(dobCell);
                 row.appendChild(passwordCell);
+                row.appendChild(emailCell);
                 row.appendChild(ButtonCell); // Append the button
 
                 tbody.appendChild(row);
@@ -190,6 +197,55 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('createUserModal').style.display = 'none'; // Hide the modal
     }
 
+    function openEmailModal(user) {
+        document.getElementById('toEmail').value = user.email;
+        document.getElementById('subject').value = '';
+        document.getElementById('textContent').value = '';
+        document.getElementById('emailUserModal').style.display = 'block';
+    }
+    
+    function closeEmailModal() {
+        document.getElementById('emailUserModal').style.display = 'none';
+    }
+    
+    let emailSending = false;
+
+    const sendEmailDebounced = async (emailData) => {
+        if (emailSending) return; // Prevent multiple sends
+        emailSending = true;
+    
+        await sendEmail(emailData);
+    
+        emailSending = false; // Allow sending again
+    };
+    
+
+    async function sendEmailtouser() {
+
+    
+        const emailData = {
+            fromEmail: 'tomvahainam@gmail.com', // Update this with your actual email
+            fromName: 'Shop Support',
+            toEmail: document.getElementById('toEmail').value,
+            toName:  "Customer", // You can modify this to be dynamic
+            subject: document.getElementById('subject').value,
+            textContent: document.getElementById('textContent').value,
+            htmlContent: `<p>${document.getElementById('textContent').value}</p>`
+        };
+    
+        try {
+            // Assuming you have a function sendEmail defined elsewhere in your code
+            console.log('Email Data:', emailData);
+
+            await sendEmailDebounced(emailData);
+            alert('Email sent successfully');
+            closeEmailModal();
+            return
+        } catch (error) {
+            console.error('Error sending email:', error);
+        }
+    }
+
     // Attach event listeners
     document.getElementById('createButton').addEventListener('click', openCreateModal);
     document.getElementById('createCancelButton').addEventListener('click', closeCreateModal);
@@ -197,6 +253,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('cancelButton').addEventListener('click', closeEditModal);
     document.getElementById('editUserForm').addEventListener('submit', saveEditedUser);
+
+    document.getElementById('emailCancelButton').addEventListener('click', closeEmailModal);
+    document.getElementById('sendEmailForm').addEventListener('submit', function handleFormSubmit(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Call the sendEmail function
+        sendEmailtouser(event)
+
+    });
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
     const reloadButton = document.getElementById("reloadButton");
     reloadButton.addEventListener("click", async () => {
