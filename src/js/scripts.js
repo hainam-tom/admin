@@ -24,4 +24,15 @@ window.addEventListener('DOMContentLoaded', event => {
     if (datatablesSimple) {
         new simpleDatatables.DataTable(datatablesSimple);
     }
+    const datatables= document.getElementById('ordersTable');
+    if (datatables) {
+        new simpleDatatables.DataTable(datatablesSimple);
+    }
+});
+document.getElementById('logout').addEventListener('click', function() {
+    // Clear user data from local storage
+    localStorage.removeItem('userData'); // Change 'user' to the actual key you're using
+
+    // Redirect to the registration page
+    window.location.href = '/src/login.html'; // Change to your registration page URL
 });

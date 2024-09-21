@@ -19,7 +19,7 @@
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/client.js"></script>
+    <script src="./js/orders.js"></script>
   </head>
   <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -196,7 +196,7 @@
                   <div
                     class="card-footer d-flex align-items-center justify-content-between"
                   >
-                    <a class="small text-white stretched-link" href="#"
+                    <a class="small text-white stretched-link" href="./tables.html"
                       >Manage account</a
                     >
                     <div class="small text-white">
@@ -220,41 +220,28 @@
 
             <div class="card mb-4">
               <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                Users list
-                <button id="reloadButton">Reload Data</button>
-                <button id="createButton" class="btn-create">Create</button>
+                  <i class="fas fa-table me-1"></i>
+                  Orders List
+                  <button id="reloadOrdersButton">Reload Orders</button>
+                  <button id="createOrderButton" class="btn-create">Create Order</button>
               </div>
               <div class="card-body">
-                <table id="datatablesSimple">
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Full name</th>
-                      <th>Email</th>
-                      <th>Phone number</th>
-                      <th>Date of birth</th>
-                      <th>Password</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Id</th>
-                      <th>Full name</th>
-                      <th>Email</th>
-                      <th>Phone number</th>
-                      <th>Date of birth</th>
-                      <th>Password</th>
-                      <th>Actions</th>
-                    </tr>
-                  </tfoot>
-                  <tbody></tbody>
-                </table>
+                  <table id="datatablesSimple">
+                      <thead>
+                          <tr>
+                              <th>Id</th>
+                              <th>Product IDs</th>
+                              <th>Time</th>
+                              <th>User ID</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody></tbody>
+                  </table>
               </div>
-            </div>
+          </div>
             <div
-              id="editUserModal"
+              id="createOrderModal"
               style="
                 display: none;
                 position: fixed;
@@ -267,87 +254,31 @@
                 z-index: 1000;
               "
             >
-              <h2>Edit User</h2>
-              <form id="editUserForm">
-                <input type="hidden" id="editUserId" />
-                <div>
-                  <label for="editFullName">Full Name:</label>
-                  <input type="text" id="editFullName" />
-                </div>
-                <div>
-                  <label for="editEmail">Email:</label>
-                  <input type="email" id="editEmail" />
-                </div>
-                <div>
-                  <label for="editPhone">Phone:</label>
-                  <input type="text" id="editPhone" />
-                </div>
-                <div>
-                  <label for="editDateOfBirth">Date of Birth:</label>
-                  <input type="date" id="editDateOfBirth" />
-                </div>
-                <div>
-                  <label for="editPassword">Password:</label>
-                  <input
-                    type="password"
-                    id="editPassword"
-                    required
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
-                  />
-                </div>
-                <button type="submit">Save</button>
-                <!-- Cancel button -->
-                <button type="button" id="cancelButton">Cancel</button>
-              </form>
+              <h2>Order</h2>
+              <div>
+                <h2>Create Order</h2>
+                <form id="createOrderForm">
+                    <div>
+                        <label for="orderProductId">Product ID(s):</label>
+                        <input type="text" id="orderProductId" placeholder="Enter product IDs" />
+                    </div>
+                    <div>
+                        <label for="orderUserId">User ID:</label>
+                        <input type="number" id="orderUserId" />
+                    </div>
+                    <div>
+                        <label for="orderTime">ETA (Time):</label>
+                        <input type="text" id="orderTime" placeholder="Estimated Time to receive product" />
+                    </div>
+                    <button type="submit">Create Order</button>
+                    <button type="button" id="orderCancelButton">Cancel</button>
+                </form>
+            </div>
             </div>
 
             <!-- Create User Modal -->
-            <div
-              id="createUserModal"
-              style="
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                border: 1px solid #ccc;
-                padding: 20px;
-                background-color: white;
-                z-index: 1000;
-              "
-            >
-              <h2>Create User</h2>
-              <form id="createUserForm">
-                <div>
-                  <label for="createFullName">Full Name:</label>
-                  <input type="text" id="createFullName" required />
-                </div>
-                <div>
-                  <label for="createEmail">Email:</label>
-                  <input type="email" id="createEmail" required />
-                </div>
-                <div>
-                  <label for="createPhone">Phone:</label>
-                  <input type="text" id="createPhone" required />
-                </div>
-                <div>
-                  <label for="createDateOfBirth">Date of Birth:</label>
-                  <input type="date" id="createDateOfBirth" required />
-                </div>
-                <div>
-                  <label for="createPassword">Password:</label>
-                  <input
-                    type="password"
-                    id="createPassword"
-                    required
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
-                  />
-                </div>
-                <button type="submit" class="btn-create">Create</button>
-                <!-- Cancel button -->
-                <button type="button" id="createCancelButton">Cancel</button>
-              </form>
-            </div>
+
+
           </div>
         </main>
         <footer class="py-4 bg-light mt-auto">

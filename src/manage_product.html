@@ -19,7 +19,7 @@
       src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/client.js"></script>
+    <script src="./js/products.js"></script>
   </head>
   <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -196,7 +196,7 @@
                   <div
                     class="card-footer d-flex align-items-center justify-content-between"
                   >
-                    <a class="small text-white stretched-link" href="#"
+                    <a class="small text-white stretched-link" href="./tables.html"
                       >Manage account</a
                     >
                     <div class="small text-white">
@@ -221,7 +221,7 @@
             <div class="card mb-4">
               <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Users list
+                Products list
                 <button id="reloadButton">Reload Data</button>
                 <button id="createButton" class="btn-create">Create</button>
               </div>
@@ -230,22 +230,22 @@
                   <thead>
                     <tr>
                       <th>Id</th>
-                      <th>Full name</th>
-                      <th>Email</th>
-                      <th>Phone number</th>
-                      <th>Date of birth</th>
-                      <th>Password</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Price</th>
+                      <th>Evaluate</th>
+                      <th>Stocks</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>Id</th>
-                      <th>Full name</th>
-                      <th>Email</th>
-                      <th>Phone number</th>
-                      <th>Date of birth</th>
-                      <th>Password</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Price</th>
+                      <th>Evaluate</th>
+                      <th>Stocks</th>
                       <th>Actions</th>
                     </tr>
                   </tfoot>
@@ -269,31 +269,26 @@
             >
               <h2>Edit User</h2>
               <form id="editUserForm">
-                <input type="hidden" id="editUserId" />
+                <input type="hidden" id="editProductId" />
                 <div>
-                  <label for="editFullName">Full Name:</label>
-                  <input type="text" id="editFullName" />
+                  <label for="editFullName">Name:</label>
+                  <input type="text" id="editName" />
                 </div>
                 <div>
-                  <label for="editEmail">Email:</label>
-                  <input type="email" id="editEmail" />
+                  <label for="editEmail">Description:</label>
+                  <input type="text" id="editDescription" />
                 </div>
                 <div>
-                  <label for="editPhone">Phone:</label>
-                  <input type="text" id="editPhone" />
+                  <label for="editPhone">Price:</label>
+                  <input type="text" id="editPrice" />
                 </div>
                 <div>
-                  <label for="editDateOfBirth">Date of Birth:</label>
-                  <input type="date" id="editDateOfBirth" />
+                  <label for="editDateOfBirth">Evaluate:</label>
+                  <input type="text" id="editEvaluate" />
                 </div>
                 <div>
-                  <label for="editPassword">Password:</label>
-                  <input
-                    type="password"
-                    id="editPassword"
-                    required
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
-                  />
+                  <label for="editDateOfBirth">Stocks:</label>
+                  <input type="text" id="editStocks" />
                 </div>
                 <button type="submit">Save</button>
                 <!-- Cancel button -->
@@ -319,35 +314,32 @@
               <h2>Create User</h2>
               <form id="createUserForm">
                 <div>
-                  <label for="createFullName">Full Name:</label>
-                  <input type="text" id="createFullName" required />
+                  <label for="editFullName">Name:</label>
+                  <input type="text" id="createName" />
                 </div>
                 <div>
-                  <label for="createEmail">Email:</label>
-                  <input type="email" id="createEmail" required />
+                  <label for="editEmail">Description:</label>
+                  <input type="text" id="createDescription" />
                 </div>
                 <div>
-                  <label for="createPhone">Phone:</label>
-                  <input type="text" id="createPhone" required />
+                  <label for="editPhone">Price:</label>
+                  <input type="text" id="createPrice" />
                 </div>
                 <div>
-                  <label for="createDateOfBirth">Date of Birth:</label>
-                  <input type="date" id="createDateOfBirth" required />
+                  <label for="editDateOfBirth">Evaluate:</label>
+                  <input type="text" id="createEvaluate" />
                 </div>
                 <div>
-                  <label for="createPassword">Password:</label>
-                  <input
-                    type="password"
-                    id="createPassword"
-                    required
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*?[0-9])(?=.*?[~`!@#$%^&amp;*()_=+\[\]{};:'.,&quot;\\|\/?&gt;&lt;-]).{4,}"
-                  />
+                  <label for="editDateOfBirth">Stocks:</label>
+                  <input type="text" id="createStocks" />
                 </div>
                 <button type="submit" class="btn-create">Create</button>
                 <!-- Cancel button -->
                 <button type="button" id="createCancelButton">Cancel</button>
               </form>
             </div>
+
+
           </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
