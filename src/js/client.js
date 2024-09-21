@@ -197,97 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('createUserModal').style.display = 'none'; // Hide the modal
     }
 
-    const mailjetAPIKey = '5294d108fdbf307ffecd9b07ec9d85f0';
-    const mailjetSecretKey = 'fb1524c83ba1dd6f5af86fe27cfe9e40';
-
-    // Base64-encoded authentication token
-    const authToken = btoa(`${mailjetAPIKey}:${mailjetSecretKey}`);
-
-    // Dynamic sendEmail function
-    const sendEmail = async ({ fromEmail, fromName, toEmail, toName, subject, textContent, htmlContent }) => {
-    const response = await fetch('https://api.mailjet.com/v3.1/send', {
-        mode: "no-cors",
-        method: 'POST',
-        headers: {
-        'Authorization': `Basic ${authToken}`,
-        'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-        "Messages": [
-            {
-            "From": {
-                "Email": fromEmail,
-                "Name": fromName
-            },
-            "To": [
-                {
-                "Email": toEmail,
-                "Name": toName
-                }
-            ],
-            "Subject": subject,
-            "TextPart": textContent,
-            "HTMLPart": htmlContent
-            }
-        ]
-        })
-    });
-
-    if (response.ok) {
-        console.log("Email sent successfully:", data);
-    } else { // Get response body for error details
-        console.error("Failed to send email:", response.statusText, errorData);
-    }
-    };
-    function openEmailModal(user) {
-        document.getElementById('toEmail').value = user.email;
-        document.getElementById('subject').value = '';
-        document.getElementById('textContent').value = '';
-        document.getElementById('emailUserModal').style.display = 'block';
-    }
-    
-    function closeEmailModal() {
-        document.getElementById('emailUserModal').style.display = 'none';
-    }
-    
-    let emailSending = false;
-
-    const sendEmailDebounced = async (emailData) => {
-        if (emailSending) return; // Prevent multiple sends
-        emailSending = true;
-    
-        await sendEmail(emailData);
-    
-        emailSending = false; // Allow sending again
-    };
-    
-
-    async function sendEmailtouser() {
-
-    
-        const emailData = {
-            fromEmail: 'tomvahainam@gmail.com', // Update this with your actual email
-            fromName: 'Shop Support',
-            toEmail: document.getElementById('toEmail').value,
-            toName:  "Customer", // You can modify this to be dynamic
-            subject: document.getElementById('subject').value,
-            textContent: document.getElementById('textContent').value,
-            htmlContent: `<p>${document.getElementById('textContent').value}</p>`
-        };
-    
-        try {
-            // Assuming you have a function sendEmail defined elsewhere in your code
-            console.log('Email Data:', emailData);
-
-            await sendEmailDebounced(emailData);
-            alert('Email sent successfully');
-            closeEmailModal();
-            return
-        } catch (error) {
-            console.error('Error sending email:', error);
-        }
-    }
-
+  
+   
     // Attach event listeners
     document.getElementById('createButton').addEventListener('click', openCreateModal);
     document.getElementById('createCancelButton').addEventListener('click', closeCreateModal);
@@ -296,15 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cancelButton').addEventListener('click', closeEditModal);
     document.getElementById('editUserForm').addEventListener('submit', saveEditedUser);
 
-    document.getElementById('emailCancelButton').addEventListener('click', closeEmailModal);
-    document.getElementById('sendEmailForm').addEventListener('submit', function handleFormSubmit(event) {
-        // Prevent the default form submission behavior
-        event.preventDefault();
-
-        // Call the sendEmail function
-        sendEmailtouser(event)
-
-    });
     const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
     const reloadButton = document.getElementById("reloadButton");
     reloadButton.addEventListener("click", async () => {
