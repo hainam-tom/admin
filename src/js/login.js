@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", function () {
+
 document.getElementById("loginForm").addEventListener("submit", async function (event) {
   event.preventDefault();
 
@@ -83,3 +85,4 @@ document.getElementById("loginForm").addEventListener("submit", async function (
       console.error("Error:", error);
   }
 });
+})
