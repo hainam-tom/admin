@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic sendEmail function
     const sendEmail = async ({ fromEmail, fromName, toEmail, toName, subject, textContent, htmlContent }) => {
     const response = await fetch('https://api.mailjet.com/v3.1/send', {
+        mode: "no-cors",
         method: 'POST',
         headers: {
         'Authorization': `Basic ${authToken}`,
@@ -233,10 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (response.ok) {
-        const data = await response.json();
         console.log("Email sent successfully:", data);
-    } else {
-        const errorData = await response.json(); // Get response body for error details
+    } else { // Get response body for error details
         console.error("Failed to send email:", response.statusText, errorData);
     }
     };
