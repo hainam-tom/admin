@@ -32,7 +32,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
   .then(data => {
     console.log('Success:', data);
     alert('Registration successful!');
-    location.href()
+    location.href = "/src/login.html"
   })
   .catch(error => {
     console.error('Error:', error);
