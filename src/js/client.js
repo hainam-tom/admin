@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let storedUsers = localStorage.getItem('users');
             
             if (!storedUsers) {
-                const response = await fetch('https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users');
+                const response = await fetch( apt_link + '/users');
                 const users = await response.json();
                 localStorage.setItem('users', JSON.stringify(users));
                 storedUsers = localStorage.getItem('users');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Delete user function
     async function deleteUser(userId) {
         try {
-            const response = await fetch(`https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users/${userId}`, {
+            const response = await fetch(apt_link + `/users/${userId}`, {
                 method: 'DELETE',
             });
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch(`https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users/${userId}`, {
+            const response = await fetch(apt_link + `/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users', {
+            const response = await fetch(apt_link + '/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

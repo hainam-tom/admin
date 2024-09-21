@@ -15,7 +15,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     dateOfBirth: dateOfBirth
   };
 
-  fetch('https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users', {
+  fetch(apt_link + '/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

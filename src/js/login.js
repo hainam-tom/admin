@@ -55,7 +55,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   // If not stored, fetch from API using GET request
   try {
       const response = await fetch(
-          `https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/users?email=${encodeURIComponent(emailOrPhone)}`,
+          apt_link + `/users?email=${encodeURIComponent(emailOrPhone)}`,
           {
               method: "GET",
               headers: {

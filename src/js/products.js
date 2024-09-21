@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let storedProducts = localStorage.getItem('products');
             
             if (!storedProducts) {
-                const response = await fetch('https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/products');
+                const response = await fetch(apt_link + '/products');
                 const products = await response.json();
                 localStorage.setItem('products', JSON.stringify(products));
                 storedProducts = localStorage.getItem('products');
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Delete product function
     async function deleteProduct(productId) {
         try {
-            const response = await fetch(`https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/products/${productId}`, {
+            const response = await fetch(apt_link + `/products/${productId}`, {
                 method: 'DELETE',
             });
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch(`https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/products/${productId}`, {
+            const response = await fetch(apt_link + `/products/${productId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await fetch('https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/products', {
+            const response = await fetch('/products', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

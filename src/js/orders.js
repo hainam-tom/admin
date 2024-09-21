@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    const ordersAPI = 'https://jsa37-api-bca8a1a0f23b.herokuapp.com/api/hainam/orders';
+    const ordersAPI = apt_link + '/orders';
     
     // Fetch and store orders from API or local storage
     async function fetchAndStoreOrders() {
