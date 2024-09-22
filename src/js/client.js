@@ -55,11 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteButton.addEventListener('click', () => deleteUser(user.id)); // Attach delete functionality
                 ButtonCell.appendChild(deleteButton);
 
-                const emailButton = document.createElement('button');
-                emailButton.textContent = 'Send Email';
-                emailButton.classList.add('btn', 'btn-info');
-                emailButton.addEventListener('click', () => openEmailModal(user));
-                ButtonCell.appendChild(emailButton);
 
                 row.appendChild(idCell);
                 row.appendChild(fullNameCell);
@@ -67,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.appendChild(phoneCell);
                 row.appendChild(dobCell);
                 row.appendChild(passwordCell);
-                row.appendChild(emailCell);
                 row.appendChild(ButtonCell); // Append the button
 
                 tbody.appendChild(row);
