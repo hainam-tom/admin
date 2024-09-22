@@ -50,7 +50,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   // Check localStorage first
   if (checkLocalStorage()) {
       alert("Logged in successfully!");
-      window.location.href = "404.html"; // Redirect to your main page
+      window.location.href = "index.html"; // Redirect to your main page
       return;
   }
 
