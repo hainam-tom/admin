@@ -90,7 +90,7 @@ cleanup() {
     else
         show_message "Homebrew is already installed."
     fi
-
+    install_package "dialog" "brew install dialog"
     # Use dialog after Homebrew installation
     dialog --title "Setup Script" --msgbox "Welcome to the automatic setup script! This will install Git, Node.js, json-server, and http-server, and run both a web server and an API server." 10 60
 
