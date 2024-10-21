@@ -1,107 +1,159 @@
 #!/bin/bash
 
-# Check for Homebrew and install if not found
-if ! command -v brew &> /dev/null
-then
-    echo "Homebrew not found. Installing Homebrew..."
+# Function to install Homebrew if not installed
+install_homebrew() {
+    echo "Installing Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-    echo "Homebrew is already installed."
-fi
+    if [[ $(uname -m) == "arm64" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+    echo "Homebrew installation complete!"
+}
 
-# Add Homebrew to the path based on system architecture
-if [[ $(uname -m) == "arm64" ]]; then
-    # For Apple Silicon (M1/M2)
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-    # For Intel Macs
-    eval "$(/usr/local/bin/brew shellenv)"
-fi
+# Function to display a message using dialog
+show_message() {
+    dialog --msgbox "$1" 10 60
+}
 
-# Install Git if not installed
-if ! command -v git &> /dev/null
-then
-    echo "Git not found. Installing Git..."
-    brew install git
-else
-    echo "Git is already installed."
-fi
+# Function to get user input using dialog
+get_input() {
+    dialog --inputbox "$1" 10 60 "$2" 3>&1 1>&2 2>&3
+}
 
-# Install Node.js if not installed
-if ! command -v node &> /dev/null
-then
-    echo "Node.js not found. Installing Node.js..."
-    brew install node
-else
-    echo "Node.js is already installed."
-fi
+# Function to install a package and handle errors
+install_package() {
+    local package_name="$1"
+    local install_command="$2"
+    
+    if ! command -v "$package_name" &> /dev/null; then
+        show_message "$package_name not found. Installing $package_name now..."
+        eval "$install_command"
+        if [ $? -eq 0 ]; then
+            show_message "$package_name installation complete!"
+        else
+            show_message "Failed to install $package_name. Please check the error messages."
+        fi
+    else
+        show_message "$package_name is already installed. Skipping installation."
+    fi
+}
 
-# Install json-server globally if not installed
-if ! command -v json-server &> /dev/null
-then
-    echo "json-server not found. Installing json-server..."
-    npm install -g json-server
-else
-    echo "json-server is already installed."
-fi
+# Function to clone a Git repository
+clone_repository() {
+    local repo_url="$1"
+    local target_dir="$2"
+    
+    if [ ! -d "$target_dir" ]; then
+        show_message "Cloning repository from $repo_url..."
+        git clone "$repo_url" "$target_dir"
+        if [ $? -eq 0 ]; then
+            show_message "Repository cloned successfully."
+        else
+            show_message "Failed to clone the repository. Please check the error messages."
+        fi
+    else
+        show_message "Directory $target_dir already exists. Skipping cloning."
+    fi
+}
 
-# Install http-server globally if not installed
-if ! command -v http-server &> /dev/null
-then
-    echo "http-server not found. Installing http-server..."
-    npm install -g http-server
-else
-    echo "http-server is already installed."
-fi
+# Function to start servers
+start_servers() {
+    # Start the API server
+    show_message "Starting the API server using json-server on port $api_port..."
+    json-server --watch "$api_dir/api_jsa37/db.json" --port "$api_port" &
 
-# Clone the API repository
-read -p "Enter the directory where you want to clone the API repository: " api_dir
+    # Start the web server
+    if [ -d "$website_dir" ]; then
+        show_message "Starting the web server (http-server) on port $web_port..."
+        cd "$website_dir" || { show_message "Failed to navigate to the website directory."; exit 1; }
+        http-server -p "$web_port" &
+    else
+        show_message "Website directory does not exist. Please provide a valid path."
+        exit 1
+    fi
+}
 
-# Check if directory exists, create if not
-if [ ! -d "$api_dir" ]; then
-    mkdir -p "$api_dir"
-fi
+# Cleanup function to kill background processes
+cleanup() {
+    pkill -f json-server
+    pkill -f http-server
+    show_message "Cleanup completed. All servers have been stopped."
+}
 
-cd "$api_dir"
+# Main script execution
+{
+    # Check for Homebrew and install if not found
+    if ! command -v brew &> /dev/null; then
+        install_homebrew
+    else
+        show_message "Homebrew is already installed."
+    fi
 
-# Clone the API repository if not already cloned
-if [ ! -d "$api_dir/api_jsa37" ]; then
-    echo "Cloning the API repository..."
-    git clone https://github.com/BuiThang652/api_jsa37.git
-fi
+    # Use dialog after Homebrew installation
+    dialog --title "Setup Script" --msgbox "Welcome to the automatic setup script! This will install Git, Node.js, json-server, and http-server, and run both a web server and an API server." 10 60
 
-# Navigate to the cloned API directory
-cd api_jsa37
+    # Install necessary packages
+    install_package "git" "brew install git"
+    install_package "node" "brew install node"
+    install_package "json-server" "npm install -g json-server"
+    install_package "http-server" "npm install -g http-server"
 
-# Install dependencies (json-server and any other required packages)
-echo "Installing API dependencies..."
-npm install
+    # Ask for the API repository directory
+    api_dir=$(get_input "Enter the directory where you want to clone the API repository:" "$HOME/api_jsa37")
 
-# Start the json-server
-echo "Starting the API server using json-server..."
-json-server --watch db.json --port 3000 &
+    # Check if directory exists, create if not
+    if [ ! -d "$api_dir" ]; then
+        mkdir -p "$api_dir"
+        show_message "Created directory: $api_dir"
+    fi
 
-echo "API server is running on http://localhost:3000"
+    # Clone the API repository
+    clone_repository "https://github.com/BuiThang652/api_jsa37.git" "$api_dir/api_jsa37"
 
-# Ask the user for the path to the website source code
-read -p "Enter the directory where your website's source code is located: " website_dir
+    # Navigate to the cloned API directory and install dependencies
+    cd "$api_dir/api_jsa37" || { show_message "Failed to navigate to the API directory."; exit 1; }
+    show_message "Installing API dependencies..."
+    npm install
 
-# Check if the directory exists for the website
-if [ -d "$website_dir" ]; then
-    echo "Starting the web server..."
-    cd "$website_dir"
-    http-server -p 8080 & # Start http-server on port 8080 in the background
-    echo "Web server is running at http://localhost:8080"
-else
-    echo "Website directory does not exist. Please provide a valid path."
-fi
+    # Ask for the website directory
+    website_dir=$(get_input "Enter the directory where you want to clone the website repository:" "$HOME/admin")
 
-# Verify installations
-echo "Checking installed versions..."
-brew --version
-node --version
-git --version
-json-server --version
-http-server --version
+    # Clone the website repository
+    clone_repository "https://github.com/hainam-tom/admin.git" "$website_dir"
 
-echo "Installation complete! Both the web server and API server are up and running."
+    # Navigate to the cloned website directory and install dependencies
+    cd "$website_dir" || { show_message "Failed to navigate to the website directory."; exit 1; }
+    show_message "Installing website dependencies..."
+    npm install
+
+    # Ask for ports to run the servers
+    api_port=$(get_input "Enter the port for the API server (default: 3000):" "3000")
+    web_port=$(get_input "Enter the port for the web server (default: 8080):" "8080")
+
+    # Start servers
+    start_servers
+
+    # Verify installations and show installed versions
+    installed_versions=$(cat <<EOF
+Installed Versions:
+Homebrew version: $(brew --version | head -n 1)
+Node.js version: $(node --version)
+Git version: $(git --version)
+json-server version: $(json-server --version)
+http-server version: $(http-server --version)
+EOF
+    )
+    show_message "$installed_versions"
+
+    # Completion message
+    show_message "Installation complete! Both the web server and API server are up and running."
+
+    # Cleanup on exit
+    trap cleanup EXIT
+} || {
+    show_message "An error occurred during the installation. Please check the terminal for details."
+}
+
+exit 0
